@@ -12,100 +12,31 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f2f5;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
         }
 
-        /* ========== ХЕДЕР ========== */
         header {
             background: white;
-            padding: 15px 40px;
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #0066cc;
+            color: #007bff;
         }
 
         nav a {
-            margin-left: 25px;
+            margin-left: 30px;
             text-decoration: none;
             color: #333;
-            font-weight: 500;
         }
 
-        nav a:hover {
-            color: #0066cc;
-        }
-
-        /* ========== КОШИК ========== */
-        .cart-icon {
-            position: relative;
-            cursor: pointer;
-            font-size: 24px;
-        }
-
-        #cart-count {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: #ff4757;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Модальне вікно кошика */
-        .cart-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-        }
-
-        .cart-modal-content {
-            position: fixed;
-            right: 0;
-            top: 0;
-            width: 400px;
-            height: 100%;
-            background: white;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .cart-item-controls button {
-            margin: 0 5px;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-
-        /* ========== HERO ========== */
         .hero {
             background: linear-gradient(135deg, #1a1a2e, #16213e);
             color: white;
@@ -128,14 +59,12 @@
         }
 
         .btn {
-            background: #ff4757;
+            background: #ff6b6b;
             color: white;
             padding: 12px 30px;
             border-radius: 30px;
             text-decoration: none;
             display: inline-block;
-            cursor: pointer;
-            border: none;
         }
 
         .hero-icon {
@@ -145,7 +74,6 @@
             border-radius: 20px;
         }
 
-        /* ========== ГОЛОВНИЙ ТОВАР ========== */
         .featured {
             background: white;
             margin: 20px;
@@ -155,6 +83,7 @@
 
         .featured h2 {
             margin-bottom: 30px;
+            font-size: 28px;
         }
 
         .product-card {
@@ -170,7 +99,6 @@
             text-align: center;
             border-radius: 15px;
             font-size: 100px;
-            transition: background 0.3s;
         }
 
         .product-info {
@@ -182,6 +110,12 @@
             margin-bottom: 15px;
         }
 
+        .product-info p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
         .old-price {
             text-decoration: line-through;
             color: #999;
@@ -191,7 +125,16 @@
         .new-price {
             font-size: 28px;
             font-weight: bold;
-            color: #ff4757;
+            color: #ff6b6b;
+            margin-right: 15px;
+        }
+
+        .save {
+            background: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
         }
 
         .colors {
@@ -201,43 +144,18 @@
         }
 
         .color {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid #ddd;
-        }
-        .color-black { background: #1a1a1a; }
-        .color-blue { background: #007aff; }
-        .color-white { background: #f5f5f5; }
-
-        .quantity-selector {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .quantity-selector button {
             width: 35px;
             height: 35px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            background: white;
-            cursor: pointer;
-            font-size: 18px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
         }
 
-        .quantity-selector input {
-            width: 60px;
-            height: 35px;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
+        .black { background: #1a1a1a; }
+        .blue { background: #007aff; }
+        .white { background: #f5f5f5; }
 
         .buy-btn {
-            background: #0066cc;
+            background: #007bff;
             color: white;
             padding: 15px;
             border: none;
@@ -247,7 +165,6 @@
             cursor: pointer;
         }
 
-        /* ========== ТОВАРИ ========== */
         .popular {
             background: white;
             margin: 20px;
@@ -258,35 +175,17 @@
         .popular-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 15px;
         }
 
-        .search-box {
-            display: flex;
-            gap: 10px;
-        }
-
-        .search-box input {
-            padding: 8px 15px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            width: 200px;
-        }
-
-        .search-box button, .sort-select {
-            padding: 8px 15px;
-            border-radius: 20px;
-            border: 1px solid #ddd;
-            background: white;
-            cursor: pointer;
+        .popular-header a {
+            color: #007bff;
+            text-decoration: none;
         }
 
         .products {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
         }
 
@@ -295,61 +194,33 @@
             padding: 20px;
             border: 1px solid #eee;
             border-radius: 15px;
-            transition: all 0.3s;
-        }
-
-        .product:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
         .product-icon {
             font-size: 50px;
+            margin-bottom: 10px;
         }
 
         .product h4 {
-            margin: 10px 0;
+            margin-bottom: 10px;
         }
 
         .product-price {
-            color: #ff4757;
+            color: #ff6b6b;
             font-weight: bold;
             font-size: 18px;
+            margin-bottom: 10px;
         }
 
         .product button {
-            background: #0066cc;
+            background: #007bff;
             color: white;
             border: none;
             padding: 8px 20px;
             border-radius: 20px;
-            margin-top: 10px;
             cursor: pointer;
         }
 
-        .out-stock {
-            color: #999;
-        }
-
-        /* ========== ПОВІДОМЛЕННЯ ========== */
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #28a745;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            z-index: 1000;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        /* ========== ФУТЕР ========== */
         footer {
             background: #1a1a2e;
             color: white;
@@ -361,6 +232,15 @@
             grid-template-columns: repeat(3, 1fr);
             padding: 40px;
             text-align: center;
+        }
+
+        .footer h4 {
+            margin-bottom: 15px;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin: 5px 0;
         }
 
         .footer-bottom {
@@ -388,12 +268,6 @@
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            .cart-modal-content {
-                width: 100%;
-            }
-            .popular-header {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
@@ -407,36 +281,23 @@
             <a href="#">Акції</a>
             <a href="#">Контакти</a>
         </nav>
-        <div class="cart-icon" onclick="openCart()">
-            🛒 <span id="cart-count">0</span>
-        </div>
     </header>
-
-    <!-- Модальне вікно кошика -->
-    <div id="cart-modal" class="cart-modal">
-        <div class="cart-modal-content">
-            <h2>Ваш кошик</h2>
-            <div id="cart-items"></div>
-            <hr>
-            <h3>Загальна сума: <span id="cart-total">0</span> грн</h3>
-            <button class="btn" onclick="checkout()">Оформити замовлення</button>
-            <button onclick="closeCart()">Закрити</button>
-        </div>
-    </div>
 
     <section class="hero">
         <div class="hero-text">
             <h1>Найкращі пропозиції на електроніку</h1>
             <p>Знижки до 30% на смартфони, ноутбуки та гаджети</p>
-            <button class="btn" onclick="scrollToProducts()">До каталогу →</button>
+            <a href="#" class="btn">До каталогу →</a>
         </div>
-        <div class="hero-icon">📱 💻 🎧</div>
+        <div class="hero-icon">
+            📱 💻 🎧
+        </div>
     </section>
 
     <section class="featured">
         <h2>Головна пропозиція</h2>
         <div class="product-card">
-            <div class="product-image" id="product-image">
+            <div class="product-image">
                 📱
             </div>
             <div class="product-info">
@@ -445,19 +306,15 @@
                 <div>
                     <span class="old-price">49 999 грн</span>
                     <span class="new-price">45 999 грн</span>
+                    <span class="save">Економія 4 000 грн</span>
                 </div>
                 <div class="colors">
                     <span>Колір:</span>
-                    <div class="color color-black" onclick="changeColor('black')"></div>
-                    <div class="color color-blue" onclick="changeColor('blue')"></div>
-                    <div class="color color-white" onclick="changeColor('white')"></div>
+                    <div class="color black"></div>
+                    <div class="color blue"></div>
+                    <div class="color white"></div>
                 </div>
-                <div class="quantity-selector">
-                    <button onclick="decreaseQuantity()">-</button>
-                    <input type="number" id="quantity-input" value="1" min="1" readonly>
-                    <button onclick="increaseQuantity()">+</button>
-                </div>
-                <button class="buy-btn" onclick="addFeaturedToCart()">Купити зараз</button>
+                <button class="buy-btn">Купити зараз</button>
             </div>
         </div>
     </section>
@@ -465,17 +322,34 @@
     <section class="popular">
         <div class="popular-header">
             <h2>Популярні товари</h2>
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Пошук товарів...">
-                <button onclick="searchProducts()">🔍 Пошук</button>
-                <select id="sort-select" class="sort-select" onchange="sortProducts()">
-                    <option value="default">За замовчуванням</option>
-                    <option value="price-asc">Від дешевших до дорожчих</option>
-                    <option value="price-desc">Від дорожчих до дешевших</option>
-                </select>
+            <a href="#">Всі товари →</a>
+        </div>
+        <div class="products">
+            <div class="product">
+                <div class="product-icon">📱</div>
+                <h4>Xiaomi 13 Pro</h4>
+                <div class="product-price">32 999 грн</div>
+                <button>Купити</button>
+            </div>
+            <div class="product">
+                <div class="product-icon">💻</div>
+                <h4>MacBook Air M2</h4>
+                <div class="product-price">44 999 грн</div>
+                <button>Купити</button>
+            </div>
+            <div class="product">
+                <div class="product-icon">🎧</div>
+                <h4>AirPods Pro 2</h4>
+                <div class="product-price">6 999 грн</div>
+                <button>Купити</button>
+            </div>
+            <div class="product">
+                <div class="product-icon">⌚</div>
+                <h4>Apple Watch S9</h4>
+                <div class="product-price">18 999 грн</div>
+                <button>Купити</button>
             </div>
         </div>
-        <div id="products-container" class="products"></div>
     </section>
 
     <footer>
@@ -499,252 +373,6 @@
             <p>© 2025 SmartShop. Всі права захищені</p>
         </div>
     </footer>
-
-    <script>
-        // ========== ДАНІ ТОВАРІВ ==========
-        const products = [
-            { id: 1, name: "Xiaomi 13 Pro", price: 32999, image: "📱", inStock: true },
-            { id: 2, name: "MacBook Air M2", price: 44999, image: "💻", inStock: true },
-            { id: 3, name: "AirPods Pro 2", price: 6999, image: "🎧", inStock: true },
-            { id: 4, name: "Apple Watch S9", price: 18999, image: "⌚", inStock: true },
-            { id: 5, name: "iPad Air", price: 28999, image: "📟", inStock: false },
-            { id: 6, name: "Samsung S24", price: 35999, image: "📱", inStock: true }
-        ];
-
-        // ========== КОШИК ==========
-        let cart = [];
-
-        // Завантаження кошика з localStorage
-        function loadCart() {
-            const saved = localStorage.getItem("smartshop-cart");
-            if (saved) {
-                cart = JSON.parse(saved);
-                updateCartDisplay();
-            }
-        }
-
-        // Збереження кошика
-        function saveCart() {
-            localStorage.setItem("smartshop-cart", JSON.stringify(cart));
-        }
-
-        // Додавання до кошика
-        function addToCart(productId, quantity = 1) {
-            const product = products.find(p => p.id === productId);
-            if (!product || !product.inStock) {
-                showNotification("Товар відсутній!", "error");
-                return;
-            }
-            
-            const existing = cart.find(item => item.id === productId);
-            if (existing) {
-                existing.quantity += quantity;
-            } else {
-                cart.push({
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    quantity: quantity,
-                    image: product.image
-                });
-            }
-            
-            saveCart();
-            updateCartDisplay();
-            showNotification(`${product.name} додано до кошика!`, "success");
-        }
-
-        // Видалення з кошика
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            saveCart();
-            updateCartDisplay();
-        }
-
-        // Оновлення кількості
-        function updateQuantity(productId, newQuantity) {
-            if (newQuantity <= 0) {
-                removeFromCart(productId);
-                return;
-            }
-            const item = cart.find(item => item.id === productId);
-            if (item) {
-                item.quantity = newQuantity;
-                saveCart();
-                updateCartDisplay();
-            }
-        }
-
-        // Підрахунок суми
-        function calculateTotal() {
-            return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        }
-
-        // Відображення кошика
-        function updateCartDisplay() {
-            const cartCount = document.getElementById("cart-count");
-            const cartItems = document.getElementById("cart-items");
-            const cartTotal = document.getElementById("cart-total");
-            
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            if (cartCount) cartCount.textContent = totalItems;
-            
-            if (cartItems) {
-                if (cart.length === 0) {
-                    cartItems.innerHTML = '<p style="text-align:center; padding:20px;">Кошик порожній</p>';
-                } else {
-                    cartItems.innerHTML = cart.map(item => `
-                        <div class="cart-item">
-                            <span>${item.image} ${item.name}</span>
-                            <div class="cart-item-controls">
-                                <button onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
-                                <span>${item.quantity}</span>
-                                <button onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
-                                <span>${item.price * item.quantity} грн</span>
-                                <button onclick="removeFromCart(${item.id})">🗑️</button>
-                            </div>
-                        </div>
-                    `).join('');
-                }
-            }
-            
-            if (cartTotal) cartTotal.textContent = calculateTotal();
-        }
-
-        // Відкриття/закриття кошика
-        function openCart() {
-            document.getElementById("cart-modal").style.display = "block";
-        }
-        
-        function closeCart() {
-            document.getElementById("cart-modal").style.display = "none";
-        }
-        
-        function checkout() {
-            if (cart.length === 0) {
-                showNotification("Кошик порожній!", "error");
-                return;
-            }
-            alert(`Дякуємо за замовлення! Сума: ${calculateTotal()} грн`);
-            cart = [];
-            saveCart();
-            updateCartDisplay();
-            closeCart();
-        }
-
-        // ========== КОЛІР ==========
-        function changeColor(color) {
-            const productImage = document.getElementById("product-image");
-            const colors = { black: "#1a1a2e", blue: "#007aff", white: "#f5f5f5" };
-            if (productImage && colors[color]) {
-                productImage.style.backgroundColor = colors[color];
-                showNotification(`Колір змінено на ${color}`, "success");
-            }
-        }
-
-        // ========== ЛІЧИЛЬНИК ==========
-        let featuredQuantity = 1;
-        
-        function increaseQuantity() {
-            featuredQuantity++;
-            document.getElementById("quantity-input").value = featuredQuantity;
-        }
-        
-        function decreaseQuantity() {
-            if (featuredQuantity > 1) {
-                featuredQuantity--;
-                document.getElementById("quantity-input").value = featuredQuantity;
-            }
-        }
-        
-        function addFeaturedToCart() {
-            addToCart(1, featuredQuantity); // iPhone має id = 1
-        }
-
-        // ========== ПОШУК ТА СОРТУВАННЯ ==========
-        let currentProducts = [...products];
-        let currentSort = "default";
-        let currentSearch = "";
-
-        function displayProducts() {
-            const container = document.getElementById("products-container");
-            let filtered = [...products];
-            
-            if (currentSearch) {
-                filtered = filtered.filter(p => 
-                    p.name.toLowerCase().includes(currentSearch.toLowerCase())
-                );
-            }
-            
-            if (currentSort === "price-asc") {
-                filtered.sort((a, b) => a.price - b.price);
-            } else if (currentSort === "price-desc") {
-                filtered.sort((a, b) => b.price - a.price);
-            }
-            
-            container.innerHTML = filtered.map(product => `
-                <div class="product">
-                    <div class="product-icon">${product.image}</div>
-                    <h4>${product.name}</h4>
-                    <p class="product-price">${product.price.toLocaleString()} грн</p>
-                    <p class="${!product.inStock ? 'out-stock' : ''}">
-                        ${product.inStock ? '✅ В наявності' : '❌ Немає в наявності'}
-                    </p>
-                    <button onclick="addToCart(${product.id})" ${!product.inStock ? 'disabled style="opacity:0.5"' : ''}>
-                        Купити
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        function searchProducts() {
-            currentSearch = document.getElementById("search-input").value;
-            displayProducts();
-        }
-        
-        function sortProducts() {
-            currentSort = document.getElementById("sort-select").value;
-            displayProducts();
-        }
-        
-        function scrollToProducts() {
-            document.querySelector(".popular").scrollIntoView({ behavior: "smooth" });
-        }
-
-        // ========== ПОВІДОМЛЕННЯ ==========
-        function showNotification(message, type = "success") {
-            const notification = document.createElement("div");
-            notification.className = "notification";
-            notification.textContent = message;
-            notification.style.backgroundColor = type === "success" ? "#28a745" : "#dc3545";
-            document.body.appendChild(notification);
-            setTimeout(() => notification.remove(), 3000);
-        }
-
-        // ========== ЗАВАНТАЖЕННЯ ==========
-        document.addEventListener("DOMContentLoaded", function() {
-            loadCart();
-            displayProducts();
-            
-            // Вітання
-            const userName = localStorage.getItem("userName");
-            if (!userName) {
-                const name = prompt("Ласкаво просимо! Як вас звати?", "Гість");
-                if (name) {
-                    localStorage.setItem("userName", name);
-                    showNotification(`Вітаємо, ${name}!`);
-                }
-            } else {
-                showNotification(`З поверненням, ${userName}!`);
-            }
-        });
-
-        // Закриття модального вікна при кліку поза ним
-        window.onclick = function(event) {
-            const modal = document.getElementById("cart-modal");
-            if (event.target === modal) closeCart();
-        }
-    </script>
 
 </body>
 </html>
