@@ -110,6 +110,41 @@
             cursor: pointer;
         }
 
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: 20px;
+            padding: 60px 50px;
+            border-radius: 20px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            background: #ff4757;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+
         .featured {
             background: white;
             margin: 20px;
@@ -344,6 +379,12 @@
                 flex-direction: column;
                 gap: 15px;
             }
+            .hero h1 {
+                font-size: 28px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
             .product-card {
                 flex-direction: column;
             }
@@ -391,6 +432,15 @@
             <button onclick="closeCart()">Закрити</button>
         </div>
     </div>
+
+    <!-- БАНЕР (БЕЗ ФОТО, ТІЛЬКИ ТЕКСТ) -->
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Найкращі пропозиції на електроніку</h1>
+            <p>Знижки до 30% на смартфони, ноутбуки та гаджети</p>
+            <button class="btn" onclick="scrollToProducts()">До каталогу →</button>
+        </div>
+    </section>
 
     <section class="featured">
         <h2>Головна пропозиція</h2>
@@ -650,6 +700,10 @@
         function sortProducts() {
             currentSort = document.getElementById("sort-select").value;
             displayProducts();
+        }
+
+        function scrollToProducts() {
+            document.querySelector(".popular").scrollIntoView({ behavior: "smooth" });
         }
 
         function showNotification(message, type = "success") {
