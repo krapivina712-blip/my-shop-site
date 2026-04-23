@@ -114,23 +114,22 @@
             background: linear-gradient(135deg, #1a1a2e, #16213e);
             color: white;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            text-align: center;
             margin: 20px;
-            padding: 60px 50px;
+            padding: 50px;
             border-radius: 20px;
+            flex-wrap: wrap;
         }
 
         .hero h1 {
-            font-size: 42px;
+            font-size: 36px;
             margin-bottom: 15px;
         }
 
         .hero p {
-            font-size: 20px;
-            margin-bottom: 25px;
-            opacity: 0.9;
+            font-size: 18px;
+            margin-bottom: 20px;
         }
 
         .btn {
@@ -142,7 +141,11 @@
             display: inline-block;
             cursor: pointer;
             border: none;
-            font-size: 16px;
+        }
+
+        .hero-image img {
+            max-width: 300px;
+            border-radius: 20px;
         }
 
         .featured {
@@ -379,11 +382,9 @@
                 flex-direction: column;
                 gap: 15px;
             }
-            .hero h1 {
-                font-size: 28px;
-            }
-            .hero p {
-                font-size: 16px;
+            .hero {
+                flex-direction: column;
+                text-align: center;
             }
             .product-card {
                 flex-direction: column;
@@ -433,12 +434,15 @@
         </div>
     </div>
 
-    <!-- БАНЕР (БЕЗ ФОТО, ТІЛЬКИ ТЕКСТ) -->
+    <!-- БАНЕР З ФОТО -->
     <section class="hero">
         <div class="hero-text">
             <h1>Найкращі пропозиції на електроніку</h1>
             <p>Знижки до 30% на смартфони, ноутбуки та гаджети</p>
             <button class="btn" onclick="scrollToProducts()">До каталогу →</button>
+        </div>
+        <div class="hero-image">
+            <img src="image/5368769022368880141.jpg" alt="Акція" onerror="this.src='https://via.placeholder.com/300x200?text=Sale'">
         </div>
     </section>
 
