@@ -30,9 +30,17 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 24px;
             font-weight: bold;
             color: #0066cc;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
         }
 
         nav a {
@@ -115,6 +123,7 @@
             margin: 20px;
             padding: 50px;
             border-radius: 20px;
+            flex-wrap: wrap;
         }
 
         .hero h1 {
@@ -138,10 +147,8 @@
             border: none;
         }
 
-        .hero-icon {
-            font-size: 80px;
-            background: rgba(255,255,255,0.1);
-            padding: 40px;
+        .hero-image img {
+            max-width: 300px;
             border-radius: 20px;
         }
 
@@ -166,11 +173,16 @@
         .product-image {
             flex: 1;
             background: #f8f9fa;
-            padding: 50px;
+            padding: 30px;
             text-align: center;
             border-radius: 15px;
-            font-size: 100px;
             transition: background 0.3s;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 15px;
         }
 
         .product-info {
@@ -303,8 +315,12 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
-        .product-icon {
-            font-size: 50px;
+        .product img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
         }
 
         .product h4 {
@@ -400,7 +416,10 @@
 <body>
 
     <header>
-        <div class="logo">🛒 SmartShop</div>
+        <div class="logo">
+            <img src="logo.png" alt="SmartShop Logo" onerror="this.src='https://via.placeholder.com/40x40?text=LOGO'">
+            <span>SmartShop</span>
+        </div>
         <nav>
             <a href="#">Головна</a>
             <a href="#">Каталог</a>
@@ -430,14 +449,16 @@
             <p>Знижки до 30% на смартфони, ноутбуки та гаджети</p>
             <button class="btn" onclick="scrollToProducts()">До каталогу →</button>
         </div>
-        <div class="hero-icon">📱 💻 🎧</div>
+        <div class="hero-image">
+            <img src="5368769022368880141.jpg" alt="Акція" onerror="this.src='https://via.placeholder.com/300x200?text=Sale'">
+        </div>
     </section>
 
     <section class="featured">
         <h2>Головна пропозиція</h2>
         <div class="product-card">
             <div class="product-image" id="product-image">
-                📱
+                <img src="iphone15pro.jpg" alt="iPhone 15 Pro" id="featured-img" onerror="this.src='https://via.placeholder.com/300x300?text=iPhone+15+Pro'">
             </div>
             <div class="product-info">
                 <h3>iPhone 15 Pro</h3>
@@ -501,20 +522,19 @@
     </footer>
 
     <script>
-        // ========== ДАНІ ТОВАРІВ ==========
+        // ========== ДАНІ ТОВАРІВ З ВАШИМИ ФОТО ==========
         const products = [
-            { id: 1, name: "Xiaomi 13 Pro", price: 32999, image: "📱", inStock: true },
-            { id: 2, name: "MacBook Air M2", price: 44999, image: "💻", inStock: true },
-            { id: 3, name: "AirPods Pro 2", price: 6999, image: "🎧", inStock: true },
-            { id: 4, name: "Apple Watch S9", price: 18999, image: "⌚", inStock: true },
-            { id: 5, name: "iPad Air", price: 28999, image: "📟", inStock: false },
-            { id: 6, name: "Samsung S24", price: 35999, image: "📱", inStock: true }
+            { id: 1, name: "Xiaomi 13 Pro", price: 32999, image: "https://fdn2.gsmarena.com/vv/bigpic/xiaomi-13-pro.jpg", inStock: true },
+            { id: 2, name: "MacBook Air M2", price: 44999, image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mba13-midnight-select-202402?wid=904&hei=840&fmt=jpeg", inStock: true },
+            { id: 3, name: "AirPods Pro 2", price: 6999, image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/airpods-pro-2-202409?wid=572&hei=572", inStock: true },
+            { id: 4, name: "Apple Watch S9", price: 18999, image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/watch-s9-starlight-202409?wid=572&hei=572", inStock: true },
+            { id: 5, name: "iPad Air", price: 28999, image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-air-m2-202405?wid=572&hei=572", inStock: false },
+            { id: 6, name: "C", price: 999, image: "C.jpg", inStock: true }
         ];
 
         // ========== КОШИК ==========
         let cart = [];
 
-        // Завантаження кошика з localStorage
         function loadCart() {
             const saved = localStorage.getItem("smartshop-cart");
             if (saved) {
@@ -523,12 +543,10 @@
             }
         }
 
-        // Збереження кошика
         function saveCart() {
             localStorage.setItem("smartshop-cart", JSON.stringify(cart));
         }
 
-        // Додавання до кошика
         function addToCart(productId, quantity = 1) {
             const product = products.find(p => p.id === productId);
             if (!product || !product.inStock) {
@@ -554,14 +572,12 @@
             showNotification(`${product.name} додано до кошика!`, "success");
         }
 
-        // Видалення з кошика
         function removeFromCart(productId) {
             cart = cart.filter(item => item.id !== productId);
             saveCart();
             updateCartDisplay();
         }
 
-        // Оновлення кількості
         function updateQuantity(productId, newQuantity) {
             if (newQuantity <= 0) {
                 removeFromCart(productId);
@@ -575,12 +591,10 @@
             }
         }
 
-        // Підрахунок суми
         function calculateTotal() {
             return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         }
 
-        // Відображення кошика
         function updateCartDisplay() {
             const cartCount = document.getElementById("cart-count");
             const cartItems = document.getElementById("cart-items");
@@ -595,7 +609,7 @@
                 } else {
                     cartItems.innerHTML = cart.map(item => `
                         <div class="cart-item">
-                            <span>${item.image} ${item.name}</span>
+                            <span>${item.name}</span>
                             <div class="cart-item-controls">
                                 <button onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
                                 <span>${item.quantity}</span>
@@ -611,7 +625,6 @@
             if (cartTotal) cartTotal.textContent = calculateTotal();
         }
 
-        // Відкриття/закриття кошика
         function openCart() {
             document.getElementById("cart-modal").style.display = "block";
         }
@@ -658,11 +671,10 @@
         }
         
         function addFeaturedToCart() {
-            addToCart(1, featuredQuantity); // iPhone має id = 1
+            addToCart(1, featuredQuantity);
         }
 
         // ========== ПОШУК ТА СОРТУВАННЯ ==========
-        let currentProducts = [...products];
         let currentSort = "default";
         let currentSearch = "";
 
@@ -684,7 +696,7 @@
             
             container.innerHTML = filtered.map(product => `
                 <div class="product">
-                    <div class="product-icon">${product.image}</div>
+                    <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/120x120?text=${product.image}'">
                     <h4>${product.name}</h4>
                     <p class="product-price">${product.price.toLocaleString()} грн</p>
                     <p class="${!product.inStock ? 'out-stock' : ''}">
@@ -726,7 +738,6 @@
             loadCart();
             displayProducts();
             
-            // Вітання
             const userName = localStorage.getItem("userName");
             if (!userName) {
                 const name = prompt("Ласкаво просимо! Як вас звати?", "Гість");
@@ -739,7 +750,6 @@
             }
         });
 
-        // Закриття модального вікна при кліку поза ним
         window.onclick = function(event) {
             const modal = document.getElementById("cart-modal");
             if (event.target === modal) closeCart();
