@@ -110,44 +110,6 @@
             cursor: pointer;
         }
 
-        .hero {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 20px;
-            padding: 50px;
-            border-radius: 20px;
-            flex-wrap: wrap;
-        }
-
-        .hero h1 {
-            font-size: 36px;
-            margin-bottom: 15px;
-        }
-
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            background: #ff4757;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer;
-            border: none;
-        }
-
-        .hero-image img {
-            max-width: 300px;
-            border-radius: 20px;
-        }
-
         .featured {
             background: white;
             margin: 20px;
@@ -382,10 +344,6 @@
                 flex-direction: column;
                 gap: 15px;
             }
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
             .product-card {
                 flex-direction: column;
             }
@@ -434,22 +392,11 @@
         </div>
     </div>
 
-    <section class="hero">
-        <div class="hero-text">
-            <h1>Найкращі пропозиції на електроніку</h1>
-            <p>Знижки до 30% на смартфони, ноутбуки та гаджети</p>
-            <button class="btn" onclick="scrollToProducts()">До каталогу →</button>
-        </div>
-        <div class="hero-image">
-            <img src="image/5368769022368880141.jpg" alt="Акція" onerror="this.src='https://via.placeholder.com/300x200?text=Sale'">
-        </div>
-    </section>
-
     <section class="featured">
         <h2>Головна пропозиція</h2>
         <div class="product-card">
             <div class="product-image" id="product-image">
-                <img src="image/iphone15pro.jpg" alt="iPhone 15 Pro" id="featured-img" onerror="this.src='https://via.placeholder.com/300x300?text=iPhone+15+Pro'">
+                <img src="image/iphone15pro.jpg" alt="iPhone 15 Pro" onerror="this.src='https://via.placeholder.com/300x300?text=iPhone+15+Pro'">
             </div>
             <div class="product-info">
                 <h3>iPhone 15 Pro</h3>
@@ -513,7 +460,6 @@
     </footer>
 
     <script>
-        // ========== ДАНІ ТОВАРІВ ==========
         const products = [
             { id: 1, name: "Xiaomi 13 Pro", price: 32999, image: "https://fdn2.gsmarena.com/vv/bigpic/xiaomi-13-pro.jpg", inStock: true },
             { id: 2, name: "MacBook Air M2", price: 44999, image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mba13-midnight-select-202402?wid=904&hei=840&fmt=jpeg", inStock: true },
@@ -523,7 +469,6 @@
             { id: 6, name: "C", price: 999, image: "image/C.jpg", inStock: true }
         ];
 
-        // ========== КОШИК ==========
         let cart = [];
 
         function loadCart() {
@@ -705,10 +650,6 @@
         function sortProducts() {
             currentSort = document.getElementById("sort-select").value;
             displayProducts();
-        }
-        
-        function scrollToProducts() {
-            document.querySelector(".popular").scrollIntoView({ behavior: "smooth" });
         }
 
         function showNotification(message, type = "success") {
