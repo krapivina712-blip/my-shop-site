@@ -74,7 +74,8 @@
             justify-content: center;
         }
 
-        .cart-modal {
+        /* ========== МОДАЛЬНІ ВІКНА ========== */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -83,6 +84,17 @@
             height: 100%;
             background: rgba(0,0,0,0.5);
             z-index: 1000;
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            margin: 50px auto;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 20px;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .cart-modal-content {
@@ -112,26 +124,6 @@
             border-radius: 8px;
         }
 
-        .cart-item-info {
-            flex: 1;
-        }
-
-        .cart-item-name {
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .cart-item-price {
-            font-size: 12px;
-            color: #ff4757;
-        }
-
-        .cart-item-controls {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
         .cart-item-controls button {
             width: 28px;
             height: 28px;
@@ -139,19 +131,6 @@
             border: 1px solid #ddd;
             background: white;
             cursor: pointer;
-        }
-
-        .cart-item-controls span {
-            min-width: 20px;
-            text-align: center;
-        }
-
-        .remove-btn {
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            color: #ff4757;
         }
 
         .hero {
@@ -346,6 +325,7 @@
             border: 1px solid #eee;
             border-radius: 15px;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .product:hover {
@@ -381,8 +361,37 @@
             cursor: pointer;
         }
 
-        .out-stock {
-            color: #999;
+        /* ========== ФОРМА РЕЄСТРАЦІЇ ========== */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .credit-calculator {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .credit-result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0066cc;
+            margin-top: 10px;
         }
 
         .notification {
@@ -443,9 +452,6 @@
             .cart-modal-content {
                 width: 100%;
             }
-            .popular-header {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
@@ -457,17 +463,18 @@
             <span>SmartShop</span>
         </div>
         <nav>
-            <a href="#">Головна</a>
-            <a href="#">Каталог</a>
-            <a href="#">Акції</a>
-            <a href="#">Контакти</a>
+            <a href="#" onclick="showMainPage()">Головна</a>
+            <a href="#" onclick="showProductsPage()">Каталог</a>
+            <a href="#" onclick="showOrderPage()">Оформлення</a>
+            <a href="#" onclick="showContacts()">Контакти</a>
         </nav>
         <div class="cart-icon" onclick="openCart()">
             🛒 <span id="cart-count">0</span>
         </div>
     </header>
 
-    <div id="cart-modal" class="cart-modal">
+    <!-- Кошик -->
+    <div id="cart-modal" class="modal">
         <div class="cart-modal-content">
             <h2 style="margin-bottom: 20px;">🛒 Ваш кошик</h2>
             <div id="cart-items"></div>
@@ -478,61 +485,133 @@
         </div>
     </div>
 
-    <section class="hero">
-        <div class="hero-text">
-            <h1>Найкращі пропозиції на електроніку</h1>
-            <p>Знижки до 30% на смартфони, ноутбуки та гаджети</p>
-            <button class="btn" onclick="scrollToProducts()">До каталогу →</button>
+    <!-- Модальне вікно товару (характеристики) -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-product-name"></h2>
+            <img id="modal-product-image" style="width: 200px; margin: 10px 0;">
+            <p><strong>💰 Ціна:</strong> <span id="modal-product-price"></span> грн</p>
+            <p><strong>📱 Характеристики:</strong></p>
+            <ul id="modal-product-specs"></ul>
+            <div class="credit-calculator">
+                <h4>💰 Калькулятор кредиту</h4>
+                <p>Вартість товару: <strong id="credit-price"></strong> грн</p>
+                <div class="form-group">
+                    <label>Термін кредиту (місяців):</label>
+                    <select id="credit-term">
+                        <option value="3">3 місяці</option>
+                        <option value="6">6 місяців</option>
+                        <option value="12">12 місяців</option>
+                        <option value="24">24 місяці</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Початковий внесок (%):</label>
+                    <input type="range" id="down-payment" min="0" max="50" value="0">
+                    <span id="down-payment-value">0</span>%
+                </div>
+                <div class="credit-result">
+                    Щомісячний платіж: <span id="monthly-payment">0</span> грн
+                </div>
+            </div>
+            <button class="btn" onclick="addCurrentProductToCart()" style="margin-top: 20px;">Додати в кошик</button>
+            <button onclick="closeProductModal()" style="margin-top: 10px;">Закрити</button>
         </div>
-        <div class="hero-image">
-            <img src="image" alt="Акція" onerror="this.src='https://via.placeholder.com/300x200?text=Sale'">
-        </div>
-    </section>
+    </div>
 
-    <section class="featured">
-        <h2>Головна пропозиція</h2>
-        <div class="product-card">
-            <div class="product-image" id="product-image">
-                <img src="image/iphone15pro.jpg" alt="iPhone 15 Pro" onerror="this.src='https://via.placeholder.com/300x300?text=iPhone+15+Pro'">
-            </div>
-            <div class="product-info">
-                <h3>iPhone 15 Pro</h3>
-                <p>Флагманський смартфон з титановим корпусом, потужним процесором A17 Pro та професійною камерою.</p>
-                <div>
-                    <span class="old-price">49 999 грн</span>
-                    <span class="new-price">45 999 грн</span>
+    <!-- Модальне вікно оформлення замовлення -->
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <h2>📝 Оформлення замовлення</h2>
+            <form id="order-form">
+                <div class="form-group">
+                    <label>ПІБ:</label>
+                    <input type="text" id="fullname" placeholder="Іван Петров" required>
                 </div>
-                <div class="colors">
-                    <span>Колір:</span>
-                    <div class="color color-black" onclick="changeColor('black')"></div>
-                    <div class="color color-blue" onclick="changeColor('blue')"></div>
-                    <div class="color color-white" onclick="changeColor('white')"></div>
+                <div class="form-group">
+                    <label>Місто:</label>
+                    <input type="text" id="city" placeholder="Київ" required>
                 </div>
-                <div class="quantity-selector">
-                    <button onclick="decreaseQuantity()">-</button>
-                    <input type="number" id="quantity-input" value="1" min="1" readonly>
-                    <button onclick="increaseQuantity()">+</button>
+                <div class="form-group">
+                    <label>Вулиця:</label>
+                    <input type="text" id="street" placeholder="Хрещатик" required>
                 </div>
-                <button class="buy-btn" onclick="addFeaturedToCart()">Купити зараз</button>
-            </div>
+                <div class="form-group">
+                    <label>Будинок:</label>
+                    <input type="text" id="house" placeholder="10" required>
+                </div>
+                <div class="form-group">
+                    <label>Квартира:</label>
+                    <input type="text" id="apartment" placeholder="25">
+                </div>
+                <div class="form-group">
+                    <label>Телефон:</label>
+                    <input type="tel" id="phone" placeholder="+380 99 123 45 67" required>
+                </div>
+                <button type="submit" class="btn">Підтвердити замовлення</button>
+            </form>
+            <button onclick="closeOrderModal()" style="margin-top: 10px;">Закрити</button>
         </div>
-    </section>
+    </div>
 
-    <section class="popular">
-        <div class="popular-header">
-            <h2>Популярні товари</h2>
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Пошук товарів...">
-                <button onclick="searchProducts()">🔍 Пошук</button>
-                <select id="sort-select" class="sort-select" onchange="sortProducts()">
-                    <option value="default">За замовчуванням</option>
-                    <option value="price-asc">Від дешевших до дорожчих</option>
-                    <option value="price-desc">Від дорожчих до дешевших</option>
-                </select>
+    <!-- Основний контент -->
+    <div id="main-content">
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Найкращі пропозиції на електроніку</h1>
+                <p>Знижки до 30% на смартфони, ноутбуки та гаджети</p>
+                <button class="btn" onclick="scrollToProducts()">До каталогу →</button>
             </div>
-        </div>
-        <div id="products-container" class="products"></div>
-    </section>
+            <div class="hero-image">
+                <img src="image/5368769022368880141.jpg" alt="Акція" onerror="this.src='https://via.placeholder.com/300x200?text=Sale'">
+            </div>
+        </section>
+
+        <section class="featured">
+            <h2>Головна пропозиція</h2>
+            <div class="product-card">
+                <div class="product-image" id="product-image">
+                    <img src="image/iphone15pro.jpg" alt="iPhone 15 Pro" onerror="this.src='https://via.placeholder.com/300x300?text=iPhone+15+Pro'">
+                </div>
+                <div class="product-info">
+                    <h3>iPhone 15 Pro</h3>
+                    <p>Флагманський смартфон з титановим корпусом, потужним процесором A17 Pro та професійною камерою.</p>
+                    <div>
+                        <span class="old-price">49 999 грн</span>
+                        <span class="new-price">45 999 грн</span>
+                    </div>
+                    <div class="colors">
+                        <span>Колір:</span>
+                        <div class="color color-black" onclick="changeColor('black')"></div>
+                        <div class="color color-blue" onclick="changeColor('blue')"></div>
+                        <div class="color color-white" onclick="changeColor('white')"></div>
+                    </div>
+                    <div class="quantity-selector">
+                        <button onclick="decreaseQuantity()">-</button>
+                        <input type="number" id="quantity-input" value="1" min="1" readonly>
+                        <button onclick="increaseQuantity()">+</button>
+                    </div>
+                    <button class="buy-btn" onclick="addFeaturedToCart()">Купити зараз</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="popular" id="products-section">
+            <div class="popular-header">
+                <h2>Популярні товари</h2>
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Пошук товарів...">
+                    <button onclick="searchProducts()">🔍 Пошук</button>
+                    <select id="sort-select" class="sort-select" onchange="sortProducts()">
+                        <option value="default">За замовчуванням</option>
+                        <option value="price-asc">Від дешевших до дорожчих</option>
+                        <option value="price-desc">Від дорожчих до дешевших</option>
+                    </select>
+                </div>
+            </div>
+            <div id="products-container" class="products"></div>
+        </section>
+    </div>
 
     <footer>
         <div class="footer">
@@ -557,17 +636,139 @@
     </footer>
 
     <script>
-        // ========== ТОВАРИ ==========
+        // ========== ДАНІ ТОВАРІВ ==========
         const products = [
-            { id: 1, name: "Xiaomi 13 Pro", price: 32999, image: "image/Xiomi13pro.jpg", inStock: true },
-            { id: 2, name: "MacBook Air M2", price: 44999, image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mba13-midnight-select-202402?wid=904&hei=840&fmt=jpeg", inStock: true },
-            { id: 3, name: "AirPods Pro 2", price: 6999, image: "image/AirPods.jpg", inStock: true },
-            { id: 4, name: "Apple Watch S9", price: 18999, image: "image/WatchS9.jpg", inStock: true },
-            { id: 5, name: "iPad Air", price: 28999, image: "image/ipadair.jpg", inStock: true },
+            { id: 1, name: "Xiaomi 13 Pro", price: 32999, image: "image/Xiomi13pro.jpg", specs: "6.73″ AMOLED, Snapdragon 8 Gen 2, 120Hz, 4820mAh, 120W", inStock: true },
+            { id: 2, name: "MacBook Air M2", price: 44999, image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mba13-midnight-select-202402?wid=904&hei=840&fmt=jpeg", specs: "Apple M2, 8GB RAM, 256GB SSD, 13.6″ Liquid Retina", inStock: true },
+            { id: 3, name: "AirPods Pro 2", price: 6999, image: "image/AirPods.jpg", specs: "Active Noise Cancellation, Adaptive EQ, Spatial Audio", inStock: true },
+            { id: 4, name: "Apple Watch S9", price: 18999, image: "image/WatchS9.jpg", specs: "Always-On Retina LTPO display, S9 SiP, 36h battery", inStock: true },
+            { id: 5, name: "iPad Air", price: 28999, image: "image/ipadair.jpg", specs: "10.9″ Liquid Retina, M1 chip, 64GB, 5G", inStock: true },
+            { id: 6, name: "C", price: 999, image: "image/С.jpg", specs: "USB-C Charging Cable, 1m length", inStock: true }
         ];
 
         let cart = [];
+        let currentProduct = null;
 
+        // ========== НАВІГАЦІЯ ==========
+        function showMainPage() {
+            document.getElementById("main-content").style.display = "block";
+            showNotification("Головна сторінка", "success");
+        }
+
+        function showProductsPage() {
+            document.getElementById("main-content").style.display = "block";
+            scrollToProducts();
+        }
+
+        function showOrderPage() {
+            document.getElementById("main-content").style.display = "block";
+            openOrderModal();
+        }
+
+        function showContacts() {
+            alert("📞 Наші контакти:\n\nТелефон: 0 800 123 456\nEmail: info@smartshop.ua\n\n📍 Адреса: м. Київ, вул. Хрещатик, 10");
+        }
+
+        // ========== ВІДКРИТТЯ ТОВАРУ З ХАРАКТЕРИСТИКАМИ ==========
+        function openProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            currentProduct = product;
+            
+            document.getElementById("modal-product-name").textContent = product.name;
+            document.getElementById("modal-product-image").src = product.image;
+            document.getElementById("modal-product-price").textContent = product.price.toLocaleString();
+            document.getElementById("credit-price").textContent = product.price.toLocaleString();
+            
+            const specsList = document.getElementById("modal-product-specs");
+            specsList.innerHTML = product.specs.split(",").map(spec => `<li>${spec.trim()}</li>`).join('');
+            
+            document.getElementById("product-modal").style.display = "block";
+            
+            // Оновлюємо калькулятор кредиту
+            updateCreditCalculator();
+        }
+
+        function closeProductModal() {
+            document.getElementById("product-modal").style.display = "none";
+        }
+
+        function addCurrentProductToCart() {
+            if (currentProduct) {
+                addToCart(currentProduct.id);
+                closeProductModal();
+            }
+        }
+
+        // ========== КАЛЬКУЛЯТОР КРЕДИТУ ==========
+        function updateCreditCalculator() {
+            if (!currentProduct) return;
+            
+            const price = currentProduct.price;
+            const term = parseInt(document.getElementById("credit-term").value);
+            const downPaymentPercent = parseInt(document.getElementById("down-payment").value);
+            document.getElementById("down-payment-value").textContent = downPaymentPercent;
+            
+            const loanAmount = price * (1 - downPaymentPercent / 100);
+            const monthlyRate = 0.02; // 2% на місяць
+            const monthlyPayment = (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, term)) / (Math.pow(1 + monthlyRate, term) - 1);
+            
+            document.getElementById("monthly-payment").textContent = Math.round(monthlyPayment).toLocaleString();
+        }
+
+        // ========== ОФОРМЛЕННЯ ЗАМОВЛЕННЯ З АВТОЗАПОВНЕННЯМ ==========
+        function openOrderModal() {
+            // Завантажуємо збережені дані користувача
+            const savedUser = localStorage.getItem("userData");
+            if (savedUser) {
+                const user = JSON.parse(savedUser);
+                document.getElementById("fullname").value = user.fullname || "";
+                document.getElementById("city").value = user.city || "";
+                document.getElementById("street").value = user.street || "";
+                document.getElementById("house").value = user.house || "";
+                document.getElementById("apartment").value = user.apartment || "";
+                document.getElementById("phone").value = user.phone || "";
+            }
+            
+            document.getElementById("order-modal").style.display = "block";
+        }
+
+        function closeOrderModal() {
+            document.getElementById("order-modal").style.display = "none";
+        }
+
+        // Збереження даних замовлення
+        document.getElementById("order-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            const userData = {
+                fullname: document.getElementById("fullname").value,
+                city: document.getElementById("city").value,
+                street: document.getElementById("street").value,
+                house: document.getElementById("house").value,
+                apartment: document.getElementById("apartment").value,
+                phone: document.getElementById("phone").value
+            };
+            
+            localStorage.setItem("userData", JSON.stringify(userData));
+            
+            if (cart.length === 0) {
+                showNotification("Ваш кошик порожній!", "error");
+                return;
+            }
+            
+            const total = calculateTotal();
+            alert(`✅ Замовлення оформлено!\n\nДані доставки:\n${userData.fullname}\n${userData.city}, ${userData.street} ${userData.house}\n📞 ${userData.phone}\n\nЗагальна сума: ${total.toLocaleString()} грн`);
+            
+            cart = [];
+            saveCart();
+            updateCartDisplay();
+            closeOrderModal();
+            showNotification("Замовлення успішно оформлено!", "success");
+        });
+
+        // ========== КОШИК ==========
         function loadCart() {
             const saved = localStorage.getItem("smartshop-cart");
             if (saved) {
@@ -643,15 +844,15 @@
                     cartItems.innerHTML = cart.map(item => `
                         <div class="cart-item">
                             <img src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/50x50?text=+'">
-                            <div class="cart-item-info">
-                                <div class="cart-item-name">${item.name}</div>
-                                <div class="cart-item-price">${item.price} грн</div>
+                            <div style="flex:1">
+                                <div><strong>${item.name}</strong></div>
+                                <div>${item.price} грн</div>
                             </div>
                             <div class="cart-item-controls">
                                 <button onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
                                 <span>${item.quantity}</span>
                                 <button onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
-                                <button class="remove-btn" onclick="removeFromCart(${item.id})">🗑️</button>
+                                <button style="background:none; border:none; font-size:18px;" onclick="removeFromCart(${item.id})">🗑️</button>
                             </div>
                         </div>
                     `).join('');
@@ -674,13 +875,11 @@
                 showNotification("Кошик порожній!", "error");
                 return;
             }
-            alert(`✅ Дякуємо за замовлення!\n\nЗагальна сума: ${calculateTotal().toLocaleString()} грн`);
-            cart = [];
-            saveCart();
-            updateCartDisplay();
             closeCart();
+            openOrderModal();
         }
 
+        // ========== КОЛІР ТА ЛІЧИЛЬНИК ==========
         function changeColor(color) {
             const productImage = document.getElementById("product-image");
             const colors = { black: "#1a1a2e", blue: "#007aff", white: "#f5f5f5" };
@@ -708,6 +907,7 @@
             addToCart(1, featuredQuantity);
         }
 
+        // ========== ПОШУК ТА СОРТУВАННЯ ==========
         let currentSort = "default";
         let currentSearch = "";
 
@@ -728,14 +928,14 @@
             }
             
             container.innerHTML = filtered.map(product => `
-                <div class="product">
+                <div class="product" onclick="openProductModal(${product.id})">
                     <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/120x120?text=${product.name}'">
                     <h4>${product.name}</h4>
                     <p class="product-price">${product.price.toLocaleString()} грн</p>
                     <p class="${!product.inStock ? 'out-stock' : ''}">
                         ${product.inStock ? '✅ В наявності' : '❌ Немає в наявності'}
                     </p>
-                    <button onclick="addToCart(${product.id})" ${!product.inStock ? 'disabled style="opacity:0.5"' : ''}>
+                    <button onclick="event.stopPropagation(); addToCart(${product.id})" ${!product.inStock ? 'disabled style="opacity:0.5"' : ''}>
                         Купити
                     </button>
                 </div>
@@ -753,9 +953,10 @@
         }
 
         function scrollToProducts() {
-            document.querySelector(".popular").scrollIntoView({ behavior: "smooth" });
+            document.getElementById("products-section").scrollIntoView({ behavior: "smooth" });
         }
 
+        // ========== ПОВІДОМЛЕННЯ ==========
         function showNotification(message, type = "success") {
             const notification = document.createElement("div");
             notification.className = "notification";
@@ -765,9 +966,14 @@
             setTimeout(() => notification.remove(), 3000);
         }
 
+        // ========== ЗАВАНТАЖЕННЯ ==========
         document.addEventListener("DOMContentLoaded", function() {
             loadCart();
             displayProducts();
+            
+            // Налаштовуємо калькулятор кредиту
+            document.getElementById("credit-term").addEventListener("change", updateCreditCalculator);
+            document.getElementById("down-payment").addEventListener("input", updateCreditCalculator);
             
             const userName = localStorage.getItem("userName");
             if (!userName) {
@@ -782,8 +988,12 @@
         });
 
         window.onclick = function(event) {
-            const modal = document.getElementById("cart-modal");
-            if (event.target === modal) closeCart();
+            const cartModal = document.getElementById("cart-modal");
+            const productModal = document.getElementById("product-modal");
+            const orderModal = document.getElementById("order-modal");
+            if (event.target === cartModal) closeCart();
+            if (event.target === productModal) closeProductModal();
+            if (event.target === orderModal) closeOrderModal();
         }
     </script>
 
